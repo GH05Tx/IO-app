@@ -1,7 +1,7 @@
 import React from 'react';
 
 import OffersItems from './offersItems';
-import Test from './test';
+//import Test from './test';
 import data from '../data/offers.json';
 //import FilterItems from './filterItems';
 
@@ -29,19 +29,6 @@ export default class OffersDisplay extends React.Component {
         let offersArray = [...this.state.displayedOffers];
         offersArray.splice(0, offersArray.length);
        
-       /* data.Cars.map((car, i) => {
-            return (
-            <li key={i}>
-                <p>{car.Manufacturer} {car.Model} {car.Type} {car.DateOfProduction} {car.Price} {car.NumberOfSeats} {car.FuelConsumption}</p>
-           */
-        /*
-        for(let i = 0; i < 20; i++) {
-            offersArray.unshift({
-                index: Math.random() * 10,
-                content: Math.random()
-            });
-        }
-        */
         console.log(data.Cars.length);
         //offersArray.push(data.Cars.)
        
@@ -62,13 +49,17 @@ export default class OffersDisplay extends React.Component {
                 index: Math.random()
             });
         }
+
         offersArray.sort((a, b) => (parseInt(a.car[0]) > parseInt(b.car[0])) ? 1 : -1)
+        
         console.log(offersArray)
         //console.log(this.state.displayedOffers.length);        
+        
         this.setState({
             displayedOffers: offersArray,
             allOffers: offersArray
         });
+        
         console.log(this.state.displayedOffers.length)
     }
 
@@ -78,7 +69,9 @@ export default class OffersDisplay extends React.Component {
         let filterCondition = [...this.state.filterCondition];
         let displayedOffers = [...this.state.displayedOffers];
         let offersToDisplay = [];
+        
         console.log(displayedOffers);
+        
         if (filterCondition.length > 0) {
 
         } if (searchInput.length > 0) {
@@ -130,11 +123,7 @@ export default class OffersDisplay extends React.Component {
         this.setState({
             searchInput: e.target.value
         });
-    
-        /*if (e.target.value.length === 0) this.setState({
-            displayedOffers: [...this.state.allOffers]
-        }); */
-}  
+    }  
 
     refreshOffers = () => {
         this.getOffers();
@@ -175,12 +164,12 @@ export default class OffersDisplay extends React.Component {
 //<FilterItems categoryTitle="brand" filterConditions={this.state.filterCategories}/>
 /*
 <ul>
-                    {data.Cars.map((car, i) => {
-                        return (
-                        <li key={i}>
-                            <p>{car.Manufacturer} {car.Model} {car.Type} {car.DateOfProduction} {car.Price} {car.NumberOfSeats} {car.FuelConsumption}</p>
-                        </li>
-                        );})
-                        }
-                </ul>
-                */
+    {data.Cars.map((car, i) => {
+        return (
+            <li key={i}>
+                <p>{car.Manufacturer} {car.Model} {car.Type} {car.DateOfProduction} {car.Price} {car.NumberOfSeats} {car.FuelConsumption}</p>
+            </li>
+        );})
+    }
+</ul>
+*/
