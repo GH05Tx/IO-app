@@ -62,24 +62,15 @@ export default class OffersDisplay extends React.Component {
                 index: Math.random()
             });
         }
-       
+        offersArray.sort((a, b) => (parseInt(a.car[0]) > parseInt(b.car[0])) ? 1 : -1)
+        console.log(offersArray)
         //console.log(this.state.displayedOffers.length);        
         this.setState({
             displayedOffers: offersArray,
             allOffers: offersArray
         });
-        //console.log(this.state.displayedOffers.length);
+        console.log(this.state.displayedOffers.length)
     }
-
-    compare(a, b) {
-        if (a <= b)
-           return -1
-        if (a >= b)
-           return 1
-        else return 0
-     }
-
-//var n = parseInt("2018@geeksforgeeks");
 
     searchItems = () => {
         let searchInput = this.state.searchInput;
@@ -98,20 +89,24 @@ export default class OffersDisplay extends React.Component {
                             car: displayedOffers[i].car,
                             index: Math.random()
                         });
+                        j = displayedOffers[0].car.length;
                     }
                 }
             }   
-        } if (sortCondition.length > 0) {
-            if (sortCondition === "price-ascending") 
-            offersToDisplay = displayedOffers.sort((a, b) => (parseInt(a.car[5]) > parseInt(b.car[5])) ? 1 : -1);
-            else if (sortCondition === " price-descending") 
-            offersToDisplay = displayedOffers.sort((a, b) => (parseInt(a.car[5]) < parseInt(b.car[5])) ? 1 : -1);
-            else if (sortCondition === "brands-az") 
-            offersToDisplay = displayedOffers.sort((a, b) => (a.car[1] > b.car[1]) ? 1 : -1);
-            else if (sortCondition === "brands-za") 
-            offersToDisplay = displayedOffers.sort((a, b) => (a.car[1] < b.car[1]) ? 1 : -1);
-            else if (sortCondition === "none") 
+        } else if (searchInput.length === 0) {
             offersToDisplay = [...this.state.allOffers];
+        } if (sortCondition.length > 0) {
+            if (sortCondition === "price_asc") { 
+                offersToDisplay = offersToDisplay.sort((a, b) => (parseInt(a.car[5]) > parseInt(b.car[5])) ? 1 : -1); 
+            } else if (sortCondition === "price_desc") {
+                offersToDisplay = offersToDisplay.sort((a, b) => (parseInt(a.car[5]) < parseInt(b.car[5])) ? 1 : -1);
+            } else if (sortCondition === "brands_az") {
+                offersToDisplay = offersToDisplay.sort((a, b) => (a.car[1].concat(a.car[2]) > b.car[1].concat(b.car[2])) ? 1 : -1);
+            } else if (sortCondition === "brands_za") {
+                offersToDisplay = offersToDisplay.sort((a, b) => (a.car[1].concat(a.car[2]) < b.car[1].concat(b.car[2])) ? 1 : -1);
+            } else if (sortCondition === "none") {
+                offersToDisplay = offersToDisplay.sort((a, b) => (parseInt(a.car[0]) > parseInt(b.car[0])) ? 1 : -1);
+            }
         }
         this.setState({
             displayedOffers: offersToDisplay
@@ -135,9 +130,10 @@ export default class OffersDisplay extends React.Component {
         this.setState({
             searchInput: e.target.value
         });
-        if (e.target.value.length == 0) this.setState({
+    
+        /*if (e.target.value.length === 0) this.setState({
             displayedOffers: [...this.state.allOffers]
-        }); 
+        }); */
 }  
 
     refreshOffers = () => {
@@ -160,10 +156,10 @@ export default class OffersDisplay extends React.Component {
                 <select onChange={this.sortOffers}>
                     <option value="" hidden>Sort by...</option>
                     <option value="none">-</option>
-                    <option value="price-ascending">Price ascending</option>
-                    <option value="price-descending">Price descending</option>
-                    <option value="brands-az">Brands A-Z</option>
-                    <option value="brands-za">Brands Z-A</option>
+                    <option value="price_asc">Price ascending</option>
+                    <option value="price_desc">Price descending</option>
+                    <option value="brands_az">Brands A-Z</option>
+                    <option value="brands_za">Brands Z-A</option>
                 </select>
                 <div></div>
                 <button onClick={this.searchItems}>SEARCH</button>

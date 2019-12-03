@@ -75,4 +75,48 @@
         "IsAvailable":"Y",
         "NumberOfSeats":"4",
         "FuelConsumption":"16" 
+    },
+    {   
+        "CarID":"167", 
+        "Manufacturer":"Toyota", 
+        "Model":"Corolla", 
+        "Type":"sedan", 
+        "DateOfProduction":"2017", 
+        "Price":"450",
+        "IsAvailable":"Y",
+        "NumberOfSeats":"5",
+        "FuelConsumption":"10" 
+    },
+    {   
+        "CarID":"169", 
+        "Manufacturer":"Volkswagen", 
+        "Model":"Passat", 
+        "Type":"combi", 
+        "DateOfProduction":"2000", 
+        "Price":"400",
+        "IsAvailable":"Y",
+        "NumberOfSeats":"5",
+        "FuelConsumption":"16" 
+    },
+    {   
+        "CarID":"172", 
+        "Manufacturer":"Volkswagen", 
+        "Model":"Polo", 
+        "Type":"hatchback", 
+        "DateOfProduction":"2005", 
+        "Price":"300",
+        "IsAvailable":"Y",
+        "NumberOfSeats":"4",
+        "FuelConsumption":"8" 
+    },
+    {   
+        "CarID":"175", 
+        "Manufacturer":"Opel", 
+        "Model":"Astra", 
+        "Type":"hatchback", 
+        "DateOfProduction":"2007", 
+        "Price":"300",
+        "IsAvailable":"Y",
+        "NumberOfSeats":"4",
+        "FuelConsumption":"8" 
     }]}

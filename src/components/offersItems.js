@@ -6,11 +6,10 @@ export default class OffersItems extends React.Component {
             <ul>
                 {
                     this.props.content.map(function(offer) {
-                        //let offerString = offer.car.join(' ');
                         let offerItem = [];
-                        let carIndex = offer.car.CarID;
+
                         for(let i = 0; i < offer.car.length; i++) {
-                            offerItem.push(<span key={Math.random()}>{offer.car[i] + " "}</span>)
+                            offerItem.push(<span key={Math.random()}>{`${offer.car[i]} `}</span>)
                         }
 
                         return <li key={Math.random()}>
