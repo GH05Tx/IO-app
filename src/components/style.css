@@ -1,0 +1,99 @@
+body {
+    text-align: center;
+    font-size: 14px;
+    font-family: Product Sans;
+}
+
+.navigation > div, .navigation > span, .navigation > input, .navigation > button {
+    margin: 5px;
+}
+
+::placeholder, .filterPlaceholder {
+    margin-left: 10px;
+    color: grey;
+    font-size: 14px;
+    font-family: Product Sans;
+}
+
+.filterPlaceholder {
+    width: 100px;
+}
+
+.navigation {
+    display: inline-block;
+    width: 700px;
+}
+
+.offersDisplayContainer {
+    width: 650px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.searchInput { 
+    /*display: inline;*/
+    width: 213px;
+    height: 31px;
+    border-radius: 10px 10px 10px 10px;
+    background-color: #fffff2;
+    border: solid black 1px;
+
+}
+
+.filterDropdown {
+    display: inline;
+    width: 300px;
+    border: solid black 1px;
+    border-radius: 10px 10px 10px 10px;
+    text-align: left;
+    /*margin-left: 10px;*/
+    position: relative;
+    background-color: white;
+    z-index: 10;
+    width: 200px;
+}
+
+.filterDropdownContent {
+    display: none;
+    /*position: absolute;*/
+    background-color: white;
+    border: solid black;
+    width: 130px;
+    height: 35px;
+}
+
+.sortSelect {
+    border-radius: 10px 10px 10px 10px;
+    width: 130px;
+    height: 35px;
+    background-color: #fffff2;
+    border: solid black 1px;
+}
+
+.offersItems {
+    width: 1200px;
+}
+
+.searchButton, .refreshButton {
+    border-radius: 18px 18px 18px 18px;
+    font-size: 14px;
+    font-family: Product Sans;
+    height: 35px;
+    background-color: #fffff2;
+    border: solid black 1px;
+}
+
+.refreshButton {
+    width: 65px;
+    !display: inline;
+}
+
+.refreshButton > img {
+    width: 60%;
+    margin: auto;
+}
+
+.searchButton {
+    width: 130px;
+}
+

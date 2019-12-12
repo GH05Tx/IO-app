@@ -33,7 +33,7 @@ export default class OffersItems extends React.Component {
                     })
                 }
             </ul>*/
-            <table width="900" key={Math.random()}>
+            <table key={Math.random()}>
                 <thead>
                     <tr key={Math.random()}>{headerRow}</tr>
                 </thead>

@@ -3,8 +3,9 @@ import React from 'react';
 import OffersItems from './offersItems';
 //import Test from './test';
 import data from '../data/offers.json';
-//import FilterItems from './filterItems';
-
+import FilterItems from './filterItems';
+import "./style.css";
+import refreshIcon from "../data/refresh.png";
 
 export default class OffersDisplay extends React.Component {
     constructor(props) {
@@ -51,26 +52,30 @@ export default class OffersDisplay extends React.Component {
         }
 
         offersArray.sort((a, b) => (parseInt(a.car[0]) > parseInt(b.car[0])) ? 1 : -1)
-        
-        console.log(offersArray)
-        //console.log(this.state.displayedOffers.length);        
-        
+                
+        document.getElementById("searchInput").value=""; 
+        document.getElementById("sortSelect").value=""; 
+
         this.setState({
             displayedOffers: offersArray,
-            allOffers: offersArray
+            allOffers: offersArray,
+            filterCondition: [],
+            sortCondition: "",
+            searchInput: ""
         });
-        
-        console.log(this.state.displayedOffers.length)
+
+        console.log(this.state.searchInput);
+        console.log(this.state.sortCondition);
     }
 
     searchItems = () => {
         let searchInput = this.state.searchInput;
         let sortCondition = this.state.sortCondition;
         let filterCondition = [...this.state.filterCondition];
-        let displayedOffers = [...this.state.displayedOffers];
+        //let displayedOffers = [...this.state.displayedOffers];
+        //let allOffers = [...this.state.allOffers];
+        let displayedOffers = [...this.state.allOffers];
         let offersToDisplay = [];
-        
-        console.log(displayedOffers);
         
         if (filterCondition.length > 0) {
 
@@ -89,13 +94,13 @@ export default class OffersDisplay extends React.Component {
         } else if (searchInput.length === 0) {
             offersToDisplay = [...this.state.allOffers];
         } if (sortCondition.length > 0) {
-            if (sortCondition === "price_asc") { 
+            if (sortCondition === "priceAsc") { 
                 offersToDisplay = offersToDisplay.sort((a, b) => (parseInt(a.car[5]) > parseInt(b.car[5])) ? 1 : -1); 
-            } else if (sortCondition === "price_desc") {
+            } else if (sortCondition === "priceDesc") {
                 offersToDisplay = offersToDisplay.sort((a, b) => (parseInt(a.car[5]) < parseInt(b.car[5])) ? 1 : -1);
-            } else if (sortCondition === "brands_az") {
+            } else if (sortCondition === "brandsAz") {
                 offersToDisplay = offersToDisplay.sort((a, b) => (a.car[1].concat(a.car[2]) > b.car[1].concat(b.car[2])) ? 1 : -1);
-            } else if (sortCondition === "brands_za") {
+            } else if (sortCondition === "brandsZa") {
                 offersToDisplay = offersToDisplay.sort((a, b) => (a.car[1].concat(a.car[2]) < b.car[1].concat(b.car[2])) ? 1 : -1);
             } else if (sortCondition === "none") {
                 offersToDisplay = offersToDisplay.sort((a, b) => (parseInt(a.car[0]) > parseInt(b.car[0])) ? 1 : -1);
@@ -104,6 +109,10 @@ export default class OffersDisplay extends React.Component {
         this.setState({
             displayedOffers: offersToDisplay
         });
+
+        console.log('sort: ' + this.state.sortCondition);
+        console.log('search: ' + this.state.searchInput);
+        console.log('displayed: ' + this.state.displayedOffers);
     }
 
     // update sort condition state
@@ -128,6 +137,16 @@ export default class OffersDisplay extends React.Component {
     refreshOffers = () => {
         this.getOffers();
     }
+
+    showOptions = () => {
+        let displayProperty = "inline";
+        const dropdownElement = document.getElementById("filterDropdownContent");
+        if(dropdownElement.style.display === "none") {
+            dropdownElement.style.display = displayProperty;
+        } else {
+            document.getElementById("filterDropdownContent").style.display = "none";
+        }
+    }
   
     componentDidMount = () => {
        this.getOffers();
@@ -141,19 +160,40 @@ export default class OffersDisplay extends React.Component {
     render() {
         return (
             <div className="offersDisplayContainer">
-                 <input placeholder="Search for..." onChange={this.searchForOffers}></input>
-                <select onChange={this.sortOffers}>
-                    <option value="" hidden>Sort by...</option>
-                    <option value="none">-</option>
-                    <option value="price_asc">Price ascending</option>
-                    <option value="price_desc">Price descending</option>
-                    <option value="brands_az">Brands A-Z</option>
-                    <option value="brands_za">Brands Z-A</option>
-                </select>
-                <div></div>
-                <button onClick={this.searchItems}>SEARCH</button>
-                <button onClick={this.refreshOffers}>REFRESH</button>
-                <div>
+                <div className="navigation">
+                    <input  id="searchInput" 
+                        className="searchInput"
+                        placeholder="Search for..." 
+                        onChange={this.searchForOffers}></input>
+                    <select id="sortSelect" 
+                            className="sortSelect"
+                            onChange={this.sortOffers}>
+                        <option value="" hidden>Sort by...</option>
+                        <option value="none">-</option>
+                        <option value="priceAsc">Price ascending</option>
+                        <option value="priceDesc">Price descending</option>
+                        <option value="brandsAz">Brands A-Z</option>
+                        <option value="brandsZa">Brands Z-A</option>
+                    </select>
+                    <div    className="filterDropdown" 
+                            onClick={this.showOptions}>
+                        <span className="filterPlaceholder">Filter by...</span>
+                        <div    className="filterDropdownContent" 
+                                id="filterDropdownContent">
+                            <FilterItems content="" />
+                            <p>thing</p>
+                            <p>thing</p>
+                            <p>thing</p>
+                        </div>
+                    </div>
+                    <button onClick={this.searchItems} 
+                            className="searchButton">SEARCH</button>
+                    <button onClick={this.refreshOffers}
+                            className="refreshButton">
+                                <img alt ="refresh icon" src={refreshIcon}></img>
+                    </button>
+                </div>
+                <div className="offersItems">
                     <OffersItems content={this.state.displayedOffers} />
                 </div>
             </div>
