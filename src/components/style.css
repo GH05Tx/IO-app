@@ -4,74 +4,174 @@ body {
     font-family: Product Sans;
 }
 
-.navigation > div, .navigation > span, .navigation > input, .navigation > button {
-    margin: 5px;
+.navigation > div, 
+.navigation > span, 
+.navigation > input, 
+.navigation > button, 
+.navigation > select {
+    margin-left: 5px;
+    margin-right: 5px;
+    line-height: 35px;
+    vertical-align: middle;
 }
 
 ::placeholder, .filterPlaceholder {
-    margin-left: 10px;
+    position: relative;
+    left: 5px;
     color: grey;
     font-size: 14px;
     font-family: Product Sans;
+    opacity: 1; 
 }
 
 .filterPlaceholder {
-    width: 100px;
-}
+    line-height: 35px;
+    vertical-align: middle;
+    z-index: 1;
+}   
 
 .navigation {
     display: inline-block;
-    width: 700px;
+    width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px 0px 10px 0px;
 }
 
+.offersItems table {
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    border-top-left-radius: 10px;
+    border-collapse: collapse;
+    !border-collapse: 0;
+    border: 1px solid black;
+
+}
+
+.offersItems thead td:last-child {
+    border-top-right-radius: 10px;
+}
+
+.offersItems thead td:first-child {
+    border-top-left-radius: 10px;
+}
+
+.offersItems table td { 
+    padding: 5px;
+}
+
+.offersItems tbody tr {
+    border: 1px solid black;
+}
+
+.offersItems tbody td {
+   text-align: left;
+   border-bottom: 1px solid black;
+   !border-right: 1px solid black;
+}
+
+.offersItems thead td {
+    width: 40px;
+    padding: 5px;
+    text-align: center;
+    border-right: none;
+    border-left: none;
+}
+
+.offersItems thead {
+    background-color: black;
+    color: white;
+ }
+
 .offersDisplayContainer {
-    width: 650px;
+    width: 800px;
+    text-align: center;
     margin-left: auto;
     margin-right: auto;
 }
 
 .searchInput { 
-    /*display: inline;*/
     width: 213px;
     height: 31px;
     border-radius: 10px 10px 10px 10px;
     background-color: #fffff2;
     border: solid black 1px;
-
 }
 
 .filterDropdown {
-    display: inline;
-    width: 300px;
+    display: inline-block;
+    z-index: 15;
     border: solid black 1px;
     border-radius: 10px 10px 10px 10px;
     text-align: left;
-    /*margin-left: 10px;*/
-    position: relative;
     background-color: white;
-    z-index: 10;
-    width: 200px;
+    width: 128px;
+    height: 33px;
+    line-height: 35px;
+    vertical-align: middle;
 }
 
 .filterDropdownContent {
     display: none;
-    /*position: absolute;*/
+    z-index: 10;
+    margin-left: -1px;
+    margin-top: -3px;
+    position: absolute;
     background-color: white;
-    border: solid black;
-    width: 130px;
-    height: 35px;
+    border: solid black 1px;
+    width: 128px;
+   
+}
+
+.filterDropdownContent > ul {
+    list-style-type: none;
+    text-align: left;
+    padding: 0px;
+    
+}
+
+.filterCategory {
+    font-size: 12px;
+    margin-left: 5px;
+    height: 27px;
+    display: block;
+}
+
+.filterCategory input {
+    position: relative;
+    top: 2px;
+}
+
+.filterHeader {
+    font-size: 14px;
+    margin-left: 5px;
+    margin-top: 0px;
+    margin-bottom: -5px; 
+    font-weight: bold;
+
 }
 
 .sortSelect {
     border-radius: 10px 10px 10px 10px;
     width: 130px;
     height: 35px;
-    background-color: #fffff2;
+    background-color: white;
     border: solid black 1px;
+    line-height: 35px;
+    vertical-align: middle;
+}
+
+.sortSelect > option {
+    font-family: Product Sans;
+    height: 27px;
+    font-size: 14px;
 }
 
 .offersItems {
-    width: 1200px;
+    width: 800px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .searchButton, .refreshButton {
@@ -79,21 +179,42 @@ body {
     font-size: 14px;
     font-family: Product Sans;
     height: 35px;
-    background-color: #fffff2;
+    background-color: white;
     border: solid black 1px;
 }
 
 .refreshButton {
     width: 65px;
-    !display: inline;
+    font-family: Product Sans;
+    font-weight: light; 
 }
 
-.refreshButton > img {
-    width: 60%;
+.refreshSpan {
+    vertical-align: middle;
+    line-height: 35px;
     margin: auto;
+    font-size: 30px;
+    position: relative;
+    top: -3px;
 }
 
 .searchButton {
     width: 130px;
+    -webkit-transition-duration: 0.6s; 
+    transition-duration: 0.6s;
 }
 
+/*    button hover animation    */
+.searchButton:hover, .refreshButton:hover {
+    cursor: pointer;
+    background-color: black;
+    color: white;
+}
+
+.sortSelect:hover, .filterDropdown:hover {
+    cursor: pointer;
+}
+
+.filterDropdownContent:hover { 
+    cursor: default;
+}

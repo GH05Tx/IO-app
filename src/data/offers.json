@@ -11,6 +11,17 @@
         "FuelConsumption":"20" 
     },
     {   
+        "CarID":"129", 
+        "Manufacturer":"BMW", 
+        "Model":"X6", 
+        "Type":"SUV", 
+        "DateOfProduction":"2014", 
+        "Price":"950",
+        "IsAvailable":"Y",
+        "NumberOfSeats":"5",
+        "FuelConsumption":"20" 
+    },
+    {   
         "CarID":"133", 
         "Manufacturer":"BMW", 
         "Model":"M3", 
