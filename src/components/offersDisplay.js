@@ -25,7 +25,6 @@ export default class OffersDisplay extends React.Component {
 
         this.getOffers = this.getOffers.bind(this);
         this.checkCarId = this.checkCarId.bind(this);
-        //this.filterOffers = this.filterOffers.bind(this);
     }
 
     // sends json request 
@@ -53,6 +52,39 @@ export default class OffersDisplay extends React.Component {
             });
         }
 
+        /*
+        // >>>> THIS SHOULD BE CHECKED <<<<
+        // request address will be different for sure
+        // I'm not sure how it would work 
+
+        // sending request and after getting the response
+        // setting component state with received data
+        var request = require('request');
+        request('http://localhost:3001/getCarData', (response) => {
+            for (let i = 0; i < data.Cars.length; i++) {
+                let carArray = [];
+    
+                carArray = [response.Cars[i].CarID,
+                            response.Cars[i].Manufacturer, 
+                            response.Cars[i].Model, 
+                            response.Cars[i].Type,
+                            response.Cars[i].DateOfProduction,
+                            response.Cars[i].Price,
+                            response.Cars[i].NumberOfSeats,
+                            response.Cars[i].FuelConsumption];
+    
+                offersArray.push({
+                    car: carArray,
+                    index: Math.random()
+                });
+            }
+            offersArray.sort((a, b) => (parseInt(a.car[0]) > parseInt(b.car[0])) ? 1 : -1)
+            this.setState({
+                displayedOffers: offersArray
+            })
+        });
+        */
+
         // sorting all the offers by their 
         // IDs as it is default order
         offersArray.sort((a, b) => (parseInt(a.car[0]) > parseInt(b.car[0])) ? 1 : -1)
@@ -76,7 +108,6 @@ export default class OffersDisplay extends React.Component {
         filters.push([...new Set(category2)]);
         filters.push([...new Set(category3)]);
 
-
         document.getElementById("searchInput").value=""; 
         document.getElementById("sortSelect").value=""; 
 
@@ -89,6 +120,9 @@ export default class OffersDisplay extends React.Component {
         });
     }
 
+    // function used to veryfing whether the certain car 
+    // is or is not in the array - needed for the purpose 
+    // of filtering offers  
     checkCarId(id, array) {
         let ifContains = false;
         for (let i = 0; i < array.length; i++) {
@@ -109,108 +143,64 @@ export default class OffersDisplay extends React.Component {
         let categoriesNumber = [];
         let offersToDisplay = [];
         let filter = [];
-        
-        // let array = [];
    
+        // filtering starts here
         if (checkedList.length > 0) {
             for (let i = 0; i < checkedList.length; i++) {
-                if (parseInt(checkedList[i].value) === 0) filter.push([checkedList[i].nextSibling.data, 1]);
-                else if (parseInt(checkedList[i].value) === 1) filter.push([checkedList[i].nextSibling.data, 3]);
-                else if (parseInt(checkedList[i].value) === 2) filter.push([checkedList[i].nextSibling.data, 6]);
+                if (parseInt(checkedList[i].value) === 0) 
+                    filter.push([checkedList[i].nextSibling.data, 1]);
+                else if (parseInt(checkedList[i].value) === 1) 
+                    filter.push([checkedList[i].nextSibling.data, 3]);
+                else if (parseInt(checkedList[i].value) === 2) 
+                    filter.push([checkedList[i].nextSibling.data, 6]);
                 categoriesNumber.push(filter[i][1]);
             }
-        } if (filter.length > 0) {
+        } 
+        if (filter.length > 0) {
             categoriesNumber = new Set(categoriesNumber).size;
-            
-            /*
             for (let i = 0; i < displayedOffers.length; i++) {
+                let checkArray = [];
                 for (let j = 0; j < filter.length; j++) {
-                    for (let k = 0; k < categoriesNumber; k++) {
-                        if (displayedOffers[i].car[filter[j][1]] === filter[j][0] 
-                            && this.checkCarId(displayedOffers[i].car[0], offersToDisplay) === false) {
-                                offersToDisplay.push({
-                                    car: displayedOffers[i].car,
-                                    index: Math.random()
-                                });
-                        } if (displayedOffers[i].car[filter[j][1]] !== filter[j][0] 
-                            && this.checkCarId(displayedOffers[i].car[0], offersToDisplay) === true) {
-                                for (let l = 0; l < offersToDisplay.length; l++) {
-                                    if (offersToDisplay[l].car[0] === displayedOffers[i].car[0]) {                              
-                                    offersToDisplay.splice(l, 1);
-                                }
-                            }
-                        }
-                    }
-                    if (!checkArray.includes(false)) offersToDisplay.push({
-                        car: displayedOffers[i].car,
-                        index: Math.random()
-                    });
-                    checkArray.splice(0, checkArray.length);
+                    if (displayedOffers[i].car[parseInt(filter[j][1])] === filter[j][0]) {
+                        checkArray.push(true);
+                    } 
                 }
-                let index = parseInt(filter[j][1]);
-                checkArray[k][index] = true;
-            */
-                for (let i = 0; i < displayedOffers.length; i++) {
-                    let checkArray = [];
-                    console.log(checkArray)
-                    let checkArray2 = [];
-                    //let checkArray = [filter.length];
-                    for (let j = 0; j < filter.length; j++) {
-                        if (displayedOffers[i].car[parseInt(filter[j][1])] === filter[j][0]) {
-                            let array = new Array(2);
-                            array[0] = parseInt(filter[j][1]);
-                            array[1] = true;
-                            checkArray.push(array);
-                        } else if (displayedOffers[i].car[parseInt(filter[j][1])] !== filter[j][0]) {
-                            let array = new Array(2);
-                            array[0] = parseInt(filter[j][1]);
-                            array[1] = false;
-                            checkArray.push(array);
-                        }
-                    }
-                    for (let k = 0; k < checkArray.length; k++) {
-                        if (checkArray[k][1] === true) {
-                            checkArray2.push(true);
-                        }
-                    }
-
-                    if (checkArray2.length >= categoriesNumber) offersToDisplay.push({
-                        car: displayedOffers[i].car,
-                        index: Math.random()
-                    });
-                }
-
-
-
-
-        } if (searchInput.length > 0 && filter.length === 0) {
-            for (let i = 0; i < displayedOffers.length; i++) {
-                for (let j = 0; j < displayedOffers[0].car.length; j++) {
-                    if (displayedOffers[i].car[j].toLowerCase().includes(searchInput.toLowerCase())) {
-                        offersToDisplay.push({
-                            car: displayedOffers[i].car,
-                            index: Math.random()
-                        });
-                        j = displayedOffers[0].car.length;
-                    }
-                }
-            }   
-        } else if (searchInput.length > 0 && filter.length > 0) {
+                if (checkArray.length >= categoriesNumber) offersToDisplay.push({
+                    car: displayedOffers[i].car,
+                    index: Math.random()
+                });
+            }
+        }
+        // filtering ends here and searching by the input starts
+        if (searchInput.length > 0 && filter.length > 0) {
             const offersCopy = [...offersToDisplay];
+            offersToDisplay.splice(0, offersToDisplay.length);
+            //console.log(offersCopy);
             for (let i = 0; i < offersCopy.length; i++) {
-                for (let j = 0; j < offersCopy[0].car.length; j++) {
-                    if (offersCopy[i].car[j].toLowerCase().includes(searchInput.toLowerCase())) {
-                        offersToDisplay.push({
-                            car: displayedOffers[i].car,
-                            index: Math.random()
-                        });
-                        j = offersCopy[0].car.length;
-                    }
+                let carString = offersCopy[i].car.join(" ");
+                if (carString.toLowerCase().includes(searchInput.toLowerCase())) {
+                    offersToDisplay.push({
+                        car: offersCopy[i].car,
+                        index: Math.random()
+                    });
                 }
-            }   
+            }
+            //console.log(offersToDisplay);   
+        } else if (searchInput.length > 0 && filter.length === 0) {
+            for (let i = 0; i < displayedOffers.length; i++) {
+                let carString = displayedOffers[i].car.join(" ");
+                if (carString.toLowerCase().includes(searchInput.toLowerCase())) {
+                    offersToDisplay.push({
+                        car: displayedOffers[i].car,
+                        index: Math.random()
+                    });                
+                } 
+            }
         } else if (searchInput.length === 0 && filter.length === 0) {
             offersToDisplay = [...this.state.allOffers];
-        } if (sortCondition.length > 0) {
+        } 
+        // searching ends here, sorting starts 
+        if (sortCondition.length > 0) {
             if (sortCondition === "priceAsc") { 
                 offersToDisplay = offersToDisplay.sort((a, b) => (parseInt(a.car[5]) > parseInt(b.car[5])) ? 1 : -1); 
             } else if (sortCondition === "priceDesc") {
@@ -224,6 +214,7 @@ export default class OffersDisplay extends React.Component {
             }
         }
 
+        // only offers that fulfill user's requirements are being displayed 
         this.setState({
             displayedOffers: offersToDisplay
         });
@@ -252,7 +243,6 @@ export default class OffersDisplay extends React.Component {
     }  
 
     refreshOffers = () => {
-        //console.log(this.state.choosenFilters);
         this.getOffers();
     }
 
@@ -306,7 +296,13 @@ export default class OffersDisplay extends React.Component {
                     </button>
                 </div>
                 <div className="offersItems">
-                    <OffersItems className="offersItems" content={this.state.displayedOffers} />
+                    <div className="tableWrapper">
+                        <div className="tableScroll">
+                            <OffersItems 
+                                    className="offersItems" 
+                                    content={this.state.displayedOffers} />
+                        </div>
+                    </div>
                 </div>
             </div>
         )

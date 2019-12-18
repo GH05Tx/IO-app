@@ -41,12 +41,12 @@ body {
 .offersItems table {
     margin-left: auto;
     margin-right: auto;
-    width: 100%;
-    border-top-left-radius: 10px;
+    width: 750px;
     border-collapse: collapse;
     border: 1px solid black;
 }
 
+/*
 .offersItems thead td:last-child {
     border-top-right-radius: 10px;
 }
@@ -54,6 +54,7 @@ body {
 .offersItems thead td:first-child {
     border-top-left-radius: 10px;
 }
+*/
 
 .offersItems table td { 
     padding: 5px;
@@ -64,22 +65,20 @@ body {
 }
 
 .offersItems tbody td {
-   text-align: left;
-   border-bottom: 1px solid black;
+    text-align: left;
+    border-bottom: 1px solid black;
+    height: 25px;
 }
 
-.offersItems thead td {
-    width: 40px;
-    padding: 5px;
-    text-align: center;
+.offersItems thead th {
+    padding: 10px;
+    text-align: left;
     border-right: none;
     border-left: none;
-}
-
-.offersItems thead {
+    height: 30px;
     background-color: black;
     color: white;
- }
+}
 
 .offersDisplayContainer {
     width: 800px;
@@ -118,14 +117,12 @@ body {
     background-color: white;
     border: solid black 1px;
     width: 128px;
-   
 }
 
 .filterDropdownContent > ul {
     list-style-type: none;
     text-align: left;
-    padding: 0px;
-    
+    padding: 0px; 
 }
 
 .filterCategory {
@@ -146,7 +143,6 @@ body {
     margin-top: 0px;
     margin-bottom: -5px; 
     font-weight: bold;
-
 }
 
 .sortSelect {
@@ -214,4 +210,26 @@ body {
 
 .filterDropdownContent:hover { 
     cursor: default;
+}
+
+.alertBox {
+    width: 250px;
+    vertical-align: middle;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.tableWrapper {
+    position: relative;
+}
+
+.tableScroll {
+    height: 400px;
+    width: 800px;
+    overflow: auto;  
+}
+  
+.tableWrapper table {
+    width: 100%;
 }
