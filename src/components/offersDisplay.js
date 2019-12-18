@@ -90,10 +90,11 @@ export default class OffersDisplay extends React.Component {
     }
 
     checkCarId(id, array) {
+        let ifContains = false;
         for (let i = 0; i < array.length; i++) {
-            if (array[i].car[0] === id) return true;
+            if (array[i].car[0] === id) ifContains = true;
         }
-        return false;
+        return ifContains;
     }
 
     searchItems = () => {
@@ -118,37 +119,70 @@ export default class OffersDisplay extends React.Component {
                 else if (parseInt(checkedList[i].value) === 2) filter.push([checkedList[i].nextSibling.data, 6]);
                 categoriesNumber.push(filter[i][1]);
             }
-            //console.log(filter);
         } if (filter.length > 0) {
             categoriesNumber = new Set(categoriesNumber).size;
-            //console.log(displayedOffers);
-            //for (let k = 0; k < categoriesNumber; k++) {
-                for (let i = 0; i < displayedOffers.length; i++) {
-                    for (let j = 0; j < filter.length; j++) {
-                        //let carID = displayedOffers[i].car[0];
-                        //console.log(`${displayedOffers[i].car[filter[j][1]] === filter[j][0]} ${offersToDisplay.includes(carID, 0)}`);
-                        //console.log(carID);
-                        if (displayedOffers[i].car[filter[j][1]] === filter[j][0] 
-                            && this.checkCarId(displayedOffers[i].car[0], offersToDisplay) === true) {
-                                console.log("2.0");
-                                offersToDisplay.splice(i, 1);
-                        }
+            
+            /*
+            for (let i = 0; i < displayedOffers.length; i++) {
+                for (let j = 0; j < filter.length; j++) {
+                    for (let k = 0; k < categoriesNumber; k++) {
                         if (displayedOffers[i].car[filter[j][1]] === filter[j][0] 
                             && this.checkCarId(displayedOffers[i].car[0], offersToDisplay) === false) {
-                                console.log("1.0");
                                 offersToDisplay.push({
                                     car: displayedOffers[i].car,
                                     index: Math.random()
                                 });
                         } if (displayedOffers[i].car[filter[j][1]] !== filter[j][0] 
                             && this.checkCarId(displayedOffers[i].car[0], offersToDisplay) === true) {
-                                console.log("2.0");
-                                offersToDisplay.splice(i, 1);
+                                for (let l = 0; l < offersToDisplay.length; l++) {
+                                    if (offersToDisplay[l].car[0] === displayedOffers[i].car[0]) {                              
+                                    offersToDisplay.splice(l, 1);
+                                }
+                            }
                         }
                     }
-               // }
-            }
-            
+                    if (!checkArray.includes(false)) offersToDisplay.push({
+                        car: displayedOffers[i].car,
+                        index: Math.random()
+                    });
+                    checkArray.splice(0, checkArray.length);
+                }
+                let index = parseInt(filter[j][1]);
+                checkArray[k][index] = true;
+            */
+                for (let i = 0; i < displayedOffers.length; i++) {
+                    let checkArray = [];
+                    console.log(checkArray)
+                    let checkArray2 = [];
+                    //let checkArray = [filter.length];
+                    for (let j = 0; j < filter.length; j++) {
+                        if (displayedOffers[i].car[parseInt(filter[j][1])] === filter[j][0]) {
+                            let array = new Array(2);
+                            array[0] = parseInt(filter[j][1]);
+                            array[1] = true;
+                            checkArray.push(array);
+                        } else if (displayedOffers[i].car[parseInt(filter[j][1])] !== filter[j][0]) {
+                            let array = new Array(2);
+                            array[0] = parseInt(filter[j][1]);
+                            array[1] = false;
+                            checkArray.push(array);
+                        }
+                    }
+                    for (let k = 0; k < checkArray.length; k++) {
+                        if (checkArray[k][1] === true) {
+                            checkArray2.push(true);
+                        }
+                    }
+
+                    if (checkArray2.length >= categoriesNumber) offersToDisplay.push({
+                        car: displayedOffers[i].car,
+                        index: Math.random()
+                    });
+                }
+
+
+
+
         } if (searchInput.length > 0 && filter.length === 0) {
             for (let i = 0; i < displayedOffers.length; i++) {
                 for (let j = 0; j < displayedOffers[0].car.length; j++) {
