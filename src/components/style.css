@@ -18,7 +18,7 @@ body {
 ::placeholder, .filterPlaceholder {
     position: relative;
     left: 5px;
-    color: grey;
+    color: black;
     font-size: 14px;
     font-family: Product Sans;
     opacity: 1; 
@@ -44,9 +44,7 @@ body {
     width: 100%;
     border-top-left-radius: 10px;
     border-collapse: collapse;
-    !border-collapse: 0;
     border: 1px solid black;
-
 }
 
 .offersItems thead td:last-child {
@@ -68,7 +66,6 @@ body {
 .offersItems tbody td {
    text-align: left;
    border-bottom: 1px solid black;
-   !border-right: 1px solid black;
 }
 
 .offersItems thead td {
@@ -95,7 +92,7 @@ body {
     width: 213px;
     height: 31px;
     border-radius: 10px 10px 10px 10px;
-    background-color: #fffff2;
+    background-color: white;
     border: solid black 1px;
 }
 

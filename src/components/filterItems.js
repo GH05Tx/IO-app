@@ -1,6 +1,9 @@
 import React from 'react';
 
 export default class FilterItem extends React.Component {
+    clickedFilter = (e) => {
+        e.target.checked=false;
+    }
 
     render() {
         const headersArray = [  "Manufacturer", 
@@ -12,15 +15,16 @@ export default class FilterItem extends React.Component {
         for (let i = 0; i < filtersArray.length; i++) {
             let rowSize = filtersArray[i].length;
             contentArray.push(
-                <p className="filterHeader">
+                <p key={Math.random()} className="filterHeader">
                     {headersArray[i]}
                 </p>);
 
             for (let j = 0; j < rowSize; j++) {
                 contentArray.push(
-                    <label className="filterCategory">
-                        <input value={filtersArray[i][j]} type="checkbox">
-                        </input>
+                    <label key={Math.random()} className="filterCategory">
+                        <input  onSubmit={this.clickedFilter} 
+                                value={i} 
+                                type="checkbox"/>
                         {filtersArray[i][j]}
                     </label>)
             }

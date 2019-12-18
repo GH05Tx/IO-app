@@ -16,28 +16,26 @@ export default class OffersDisplay extends React.Component {
         this.state = {
             // array collecting all the offers that 
             // are supposed to be displayed at the moment
-            displayedOffers: [], 
-            allOffers: [],
+            displayedOffers: Array(0), 
+            allOffers: Array(0),
             searchInput: "",
             sortCondition: "",
-            filterCondition: [],
-            //filterCategories: [{key: 1, content: 'BMW'}, {key: 2, content: 'Mercedes'}, {key: 3, content: 'Mazda'}]
-            // filter categories: car.manufacturer, car.type, car.numberOfSeats
+            filterCondition: Array(0),
         };
 
         this.getOffers = this.getOffers.bind(this);
+        this.checkCarId = this.checkCarId.bind(this);
+        //this.filterOffers = this.filterOffers.bind(this);
     }
 
     // sends json request 
     getOffers() {
         let offersArray = [...this.state.displayedOffers];
         offersArray.splice(0, offersArray.length);
-        //console.log(data.Cars.length);
     
-        // reading data from the json file
-        // uncomment below for function for 
-        // testing purposes
-        for(let i = 0; i < data.Cars.length; i++) {
+        // reading data from the json file uncomment below
+        // loop for testing purposes
+        for (let i = 0; i < data.Cars.length; i++) {
             let carArray = [];
 
             carArray = [data.Cars[i].CarID,
@@ -55,8 +53,8 @@ export default class OffersDisplay extends React.Component {
             });
         }
 
-        // sorting all the offers by their IDs   
-        // it is default order
+        // sorting all the offers by their 
+        // IDs as it is default order
         offersArray.sort((a, b) => (parseInt(a.car[0]) > parseInt(b.car[0])) ? 1 : -1)
            
         let category1 = [];
@@ -86,51 +84,72 @@ export default class OffersDisplay extends React.Component {
             displayedOffers: offersArray,
             allOffers: offersArray,
             filterCondition: filters,
-            sortCondition: "",
+            sortCondition: "none",
             searchInput: ""
         });
+    }
+
+    checkCarId(id, array) {
+        for (let i = 0; i < array.length; i++) {
+            if (array[i].car[0] === id) return true;
+        }
+        return false;
     }
 
     searchItems = () => {
         const searchInput = this.state.searchInput;
         const sortCondition = this.state.sortCondition;
-        //const filterCondition = [...this.state.filterCondition];
-        const filter = [];
-        //let displayedOffers = [...this.state.displayedOffers];
-        //let allOffers = [...this.state.allOffers];
         const displayedOffers = [...this.state.allOffers];
+
+        // getting the array of all the checkboxes 
+        // that have been clicked by the user in order to 
+        // use that in filtering function
+        let checkedList = document.querySelectorAll('input[type="checkbox"]:checked');
+        let categoriesNumber = [];
         let offersToDisplay = [];
-        //let offers = [...displayedOffers];
-
-        /*
-        console.log(displayedOffers);
-       
-        offers.car.filter(function(veh) {
-           //console.log(veh.Model);
-        return offers.veh.Model !== "X6";
-        })
-        console.log("OFFERS: ")
-        for(let i =0; i<offers.length; i++) {
-            console.log(offers[i]);
-        }
-        */
-
-        if (filter.length < 0) {
-            for (let i = 0; i < displayedOffers.length; i++) {
-                for (let j = 1; j < displayedOffers[0].car.length; j++) {
-                    for (let k = 0; k < filter.length; k++) {
-                        /*if (displayedOffers[i].car[j].toString().includes("Opel")) {
-                            offersToDisplay.push({
-                                car: displayedOffers[i].car,
-                                index: Math.random()
-                            });
-                            j = displayedOffers[0].car.length;
-                        }*/
-                        //console.log(displayedOffers[i].car[j])
-                    }
-                }
+        let filter = [];
+        
+        // let array = [];
+   
+        if (checkedList.length > 0) {
+            for (let i = 0; i < checkedList.length; i++) {
+                if (parseInt(checkedList[i].value) === 0) filter.push([checkedList[i].nextSibling.data, 1]);
+                else if (parseInt(checkedList[i].value) === 1) filter.push([checkedList[i].nextSibling.data, 3]);
+                else if (parseInt(checkedList[i].value) === 2) filter.push([checkedList[i].nextSibling.data, 6]);
+                categoriesNumber.push(filter[i][1]);
             }
-        } if (searchInput.length > 0) {
+            //console.log(filter);
+        } if (filter.length > 0) {
+            categoriesNumber = new Set(categoriesNumber).size;
+            //console.log(displayedOffers);
+            //for (let k = 0; k < categoriesNumber; k++) {
+                for (let i = 0; i < displayedOffers.length; i++) {
+                    for (let j = 0; j < filter.length; j++) {
+                        //let carID = displayedOffers[i].car[0];
+                        //console.log(`${displayedOffers[i].car[filter[j][1]] === filter[j][0]} ${offersToDisplay.includes(carID, 0)}`);
+                        //console.log(carID);
+                        if (displayedOffers[i].car[filter[j][1]] === filter[j][0] 
+                            && this.checkCarId(displayedOffers[i].car[0], offersToDisplay) === true) {
+                                console.log("2.0");
+                                offersToDisplay.splice(i, 1);
+                        }
+                        if (displayedOffers[i].car[filter[j][1]] === filter[j][0] 
+                            && this.checkCarId(displayedOffers[i].car[0], offersToDisplay) === false) {
+                                console.log("1.0");
+                                offersToDisplay.push({
+                                    car: displayedOffers[i].car,
+                                    index: Math.random()
+                                });
+                        } if (displayedOffers[i].car[filter[j][1]] !== filter[j][0] 
+                            && this.checkCarId(displayedOffers[i].car[0], offersToDisplay) === true) {
+                                console.log("2.0");
+                                offersToDisplay.splice(i, 1);
+                        }
+                    }
+               // }
+            }
+            
+        } if (searchInput.length > 0 && filter.length === 0) {
             for (let i = 0; i < displayedOffers.length; i++) {
                 for (let j = 0; j < displayedOffers[0].car.length; j++) {
                     if (displayedOffers[i].car[j].toLowerCase().includes(searchInput.toLowerCase())) {
@@ -139,6 +158,19 @@ export default class OffersDisplay extends React.Component {
                             index: Math.random()
                         });
                         j = displayedOffers[0].car.length;
+                    }
+                }
+            }   
+        } else if (searchInput.length > 0 && filter.length > 0) {
+            const offersCopy = [...offersToDisplay];
+            for (let i = 0; i < offersCopy.length; i++) {
+                for (let j = 0; j < offersCopy[0].car.length; j++) {
+                    if (offersCopy[i].car[j].toLowerCase().includes(searchInput.toLowerCase())) {
+                        offersToDisplay.push({
+                            car: displayedOffers[i].car,
+                            index: Math.random()
+                        });
+                        j = offersCopy[0].car.length;
                     }
                 }
             }   
@@ -170,8 +202,13 @@ export default class OffersDisplay extends React.Component {
         });
     }
     
+    /*
     // update filter condition state
-    filterOffers() {}
+    filterOffers() {
+        var checkedList = document.querySelectorAll('input[type="checkbox"]:checked');
+        console.log(checkedList);
+    }
+    */
 
     // update search input state
     searchForOffers = (e) => {
@@ -181,6 +218,7 @@ export default class OffersDisplay extends React.Component {
     }  
 
     refreshOffers = () => {
+        //console.log(this.state.choosenFilters);
         this.getOffers();
     }
 
@@ -223,7 +261,7 @@ export default class OffersDisplay extends React.Component {
                         <div    className="filterDropdownContent" 
                                 id="filterDropdownContent"
                                 style={{display: "none"}}>
-                            <FilterItems content={[...this.state.filterCondition]} />
+                            <FilterItems content={[...this.state.filterCondition]}/>
                         </div>
                     </div>
                     <button onClick={this.searchItems} 
