@@ -180,6 +180,8 @@ body {
     width: 65px;
     font-family: Product Sans;
     font-weight: light; 
+    -webkit-transition-duration: 0.6s; 
+    transition-duration: 0.6s;
 }
 
 .refreshSpan {
